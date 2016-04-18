@@ -1,0 +1,424 @@
+<html>
+	<head>
+		<title>Ventors Gamble</title>
+		<link rel="shortcut icon" href="VentorsGamble.ico">
+		<style>
+			@font-face {
+				font-family: 'FontinSmallCaps';
+				src: url('Fontin-SmallCaps.ttf');
+			}
+					
+			#main {
+				padding-top: 50px;
+				width: 772px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+			#ui {
+				float: left;
+				color: #fff;
+				text-align: left;
+			}
+			
+			#ui .title{
+				background: url('VentorsGamble.png') no-repeat left;
+				width: 100%;
+				height: 47px;
+				padding-left: 55px;
+				font-size: 1.6em;
+				line-height: 47px;
+				text-align: left;
+				
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+			}
+			
+			#ui .button{
+				width: 55px;
+				height: 55px;
+				
+				border: none;
+				
+				cursor: arrow;
+			}
+			
+			#ui .button.orb-blessed{ background: url('BlessedOrb.png') no-repeat center; cursor: pointer; }
+			#ui .button.orb-divine{ background: url('DivineOrb.png') no-repeat center; cursor: pointer; }
+			#ui .button.orb-chaos{ background: url('ChaosOrb.png') no-repeat center; }
+			
+			#ui .button[class*="orb-"]{
+				float: left;
+				transition: background-size 0.2s;
+				background-size: 45px 45px;
+			}
+			
+			#ui .button.orb-divine:hover,
+			#ui .button.orb-blessed:hover {
+				transition: background-size 0.2s;
+				background-size: 55px 55px;
+			}
+			
+			#ui div.stats.orb{
+				display: block;
+				width: 100%;
+				height: 55px;
+			}
+			
+			#ui div.stats label.total {
+				float: left;
+				line-height: 55px;
+				height: 55px;
+			}
+			
+			input:focus{ outline:0; }
+					
+			body {
+				padding: 0px;
+				margin: 0px;
+			
+				font-weight: normal;
+				font-style: normal;
+				line-height: normal;
+				color: #af6025;
+				font-family: 'FontinSmallCaps', Verdana, Arial, Helvetica, sans-serif;
+				text-align: center;
+				
+				background: #2b2b2b;
+			}
+		
+			div.item {
+				float: right;
+				
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		
+			div.item div.header {
+				font-size: 19px;
+				line-height: 1.3em;
+				vertical-align: baseline;
+			}
+			
+			div.item div.header div.itemName {
+				margin-top: 2px;
+			}
+		
+			div.item div.header div.l {
+				float: left;
+
+				width: 43px; 
+				height: 53px;
+				background-image: url('ItemHeaderUniqueLeft.png');
+			}
+			
+			div.item div.header div.c {
+				float: left;
+			
+				width: 300px; 
+				height: 53px;
+				background-image: url('ItemHeaderUniqueMiddle.png');
+			}
+			
+			div.item div.header div.r {
+				float: left;
+
+				width: 43px;
+				height: 53px;
+				background-image: url('ItemHeaderUniqueRight.png');
+			}
+			
+			div.item div.body {
+				padding: 5px;
+				box-sizing: border-box;
+			
+				width: 386px;
+				min-height: 10px;
+				background-image: url('hover_background.png');
+			}
+			
+			div.item div.body div.separator {
+				content: '&nsbp;';
+
+				width: 386px; height: 8px;
+				background: url('SeparatorUnique.png') no-repeat center;
+			}
+			
+			div.item div.body div.flavourText{
+				display: inline;
+			
+				padding: 0px;
+				margin: 0px;
+			
+				font-style: italic;
+			}
+			
+			div.item div.body span.requiredLevel{ 
+				color: #7f7f7f;
+			}
+			
+			div.item div.body span.level{
+				color: #fafafa;
+			}
+			
+			div.item div.body div.mod{
+				color: #8888ff;
+			}
+			
+			#settings {
+				float: left;
+				width: 100%;
+				
+				padding-top: 20px;
+				
+				color: #fff;
+				text-align: left;
+			}
+			
+			#settings .title{
+				width: 100%;
+				font-size: 1.6em;
+				text-align: center;
+				
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+			}
+			
+			#settings input{
+				width: 50px;
+				border: 1px solid #fff;
+				border-radius: 3px;
+				background-color: rgba(25, 25, 25, 0.5);
+				color: #fff;
+				text-align: right;
+				padding-left: 3px;
+				padding-right: 3px;
+				margin-right: 3px;
+			}
+			
+			#settings label .chaos{
+				width: 150px;
+				margin-right: 10px;
+				
+			}
+			
+			#settings .setting{
+				margin-bottom: 2px;
+			}
+			
+			#settings .chaos{
+				float: right;
+			}
+			
+			#settingBox{
+				width: 50%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+			
+			input[type=number]::-webkit-inner-spin-button, 
+			input[type=number]::-webkit-outer-spin-button { 
+			  -webkit-appearance: none; 
+			  appearance: none; 
+			  margin: 0; 
+			}
+			
+			input[type=number] {
+				-moz-appearance:textfield;
+			}
+			
+			#disclaimer{
+				position: fixed;
+				bottom: 20px;
+				color: #ffffff;
+				width: 100%;
+				font-size: 1.0em;
+			}
+			
+			#disclaimer #more{
+				font-size: 0.8em;
+			}
+			
+			#disclaimer a{
+				color: #fff;
+			}
+			
+			#clickMe{ 
+				position: absolute;
+				width: 100px;
+				
+				background: url('arrow.png') no-repeat top right;
+				background-size: 50px;
+				
+				padding-right: 35px;
+				padding-top: 10px;
+				color: #fafafa;
+			}
+		</style>
+		
+		<script>
+			function roll(min, max){
+				return Math.floor((Math.random() * (max - min + 1)) + min);
+			}
+			
+			function forceMax(){
+				for (var i = 0; i < mod.length; i++) {
+					mod[i][0] = mod[i][2];
+				}
+				updateUI();
+			}
+			
+			function forceMin(){
+				for (var i = 0; i < mod.length; i++) {
+					mod[i][0] = mod[i][1];
+				}
+				updateUI();
+			}
+			
+			function forceHalf(){
+				for (var i = 0; i < mod.length; i++) {
+					mod[i][0] = Math.floor((mod[i][1] + mod[i][2])/2);
+				}
+				updateUI();
+			}
+			
+			function modString(index){
+				if(mod[index][0] > 0){
+					return mod[index][3];
+				}else if(mod[index][0] < 0){
+					return mod[index][4];
+				}else{
+					return mod[index][5];
+				}
+			}
+			
+			function updateUI(){
+				perfection = 0;
+				for (var i = 0; i < mod.length; i++) {
+					if( modString(i) != -1 ){
+						document.getElementsByClassName("mod")[i].style.display = 'block';
+						if( mod[i][6] == 1 ){
+							document.getElementsByClassName("mod")[i].innerHTML = Math.abs(mod[i][0]) + modString(i); 
+						}else{
+							document.getElementsByClassName("mod")[i].innerHTML = mod[i][0] + modString(i); 
+						}
+					}else{
+						document.getElementsByClassName("mod")[i].style.display = 'none';
+					}
+					perfection += (mod[i][0] + (mod[i][1]*-1))/((mod[i][1]*-1)+mod[i][2]);
+				}
+				perfection /= mod.length;
+				if( perfectionBest < perfection ){ perfectionBest = perfection }
+				if( perfectionWorst > perfection ){ perfectionWorst = perfection }
+				
+				chaos = document.getElementsByName("divine")[0].value*divine + document.getElementsByName("blessed")[0].value*blessed;
+				
+				document.getElementsByClassName("tBlessed")[0].innerHTML = blessed + " used";
+				document.getElementsByClassName("tDivine")[0].innerHTML = divine + " used";
+				document.getElementsByClassName("tChaos")[0].innerHTML = chaos + " spent";
+				
+				document.getElementsByClassName("pTop")[0].innerHTML = Math.round(perfectionBest*10000)/100 + "%";
+				document.getElementsByClassName("pBot")[0].innerHTML = Math.round(perfectionWorst*10000)/100 + "%";
+				document.getElementsByClassName("pNow")[0].innerHTML = Math.round(perfection*10000)/100 + "%";
+			}
+		
+			var blessed = 0;
+			var divine = 0;
+			var chaos = 0;
+			var perfection = 0;
+			var perfectionBest = 0;
+			var perfectionWorst = 1;
+			var mod = [	
+				[roll(6, 15), 6, 15, "% increased Rarity of Items found",  "% reduced Rarity of Items found", -1, 0],
+				[roll(0, 40), 0, 60, " to Maximum Life", "", -1, 0],
+				[roll(-10, 5), -10, 10, "% increased Quantity of Items found",  "% reduced Quantity of Items found", -1, 1],
+				[roll(-40, 10), -40, 40, "% increased Rarity of Items found",  "% reduced Rarity of Items found", -1, 1],
+				[roll(-25, 10), -25, 50, "% to Fire Resistance", "% to Fire Resistance", -1, 0],
+				[roll(-25, 10), -25, 50, "% to Cold Resistance", "% to Cold Resistance", -1, 0],
+				[roll(-25, 10), -25, 50, "% to Lightning Resistance", "% to Lightning Resistance", -1, 0]
+			];
+		</script>
+	</head>
+	<body>
+		<div id="clickMe">Click Me</div>
+		<div id="disclaimer">An unofficial fan site for <a href="http://www.pathofexile.com/">Path of Exile</a>.<br><div id="more">Please direct any questions about this site to <a href="http://www.reddit.com/user/DrewYoung/">DrewYoung</a> on Reddit.</div></div>
+		<div id="main">
+			<div id="ui">
+				<div class="title">Ventor's Gamble</div>
+				
+				<div class="stats">Perfection (Current): <span class="pNow">-</span></div>
+				<div class="stats">Perfection (Best): <span class="pTop">-</span></div>
+				<div class="stats">Perfection (Worst): <span class="pBot">-</span></div><br>
+									
+				<div class="stats orb"><input class="button orb-blessed" type="submit" value="" name="orb-blessed"><label for="orb-blessed" class="total tBlessed">- used</label></div>
+				<div class="stats orb"><input class="button orb-divine" type="submit" value="" name="orb-divine"><label for="orb-divine" class="total tDivine">- used</label></div>
+				<div class="stats orb"><input class="button orb-chaos" type="submit" value="" name="orb-chaos"><label for="orb-chaos" class="total tChaos">- used</label></div>
+			</div>
+			
+			<div class="item">
+				<div class="header">
+					<div class="l"></div>
+					<div class="c">
+						<div class="itemName">Ventor's Gamble</div>
+						<div class="itemName typeLine">Gold Ring</div>
+					</div>
+					<div class="r"></div>
+				</div>
+				<div class="body">
+					<span class="requiredLevel">Requires Level</span>&nbsp;<span class="level">65</span>
+					<div class="separator"></div>
+					<div class="mod">15% increased Rarity of Items found</div>
+					<div class="separator"></div>
+					<div class="mod">0 to Maximum Life</div>
+					<div class="mod">0% reduced Quantity of Items found</div>
+					<div class="mod">0% reduced Rarity of Items found</div>
+					<div class="mod">0% to Fire Resistance</div>
+					<div class="mod">0% to Cold Resistance</div>
+					<div class="mod">0% to Lightning Resistance</div>
+					<div class="separator"></div>
+					<div class="flavourText">
+						In a blaze of glory, <br>
+						An anomaly defying all odds <br>
+						The "unkillable" beast met the divine <br>
+						And Ventor met his latest Trophy.
+					</div>
+				</div>
+			</div>
+			
+			<div id="settings">
+				<div class="title">Settings</div>
+				<div id="settingBox">
+					<div class="setting"><label for="blessed">Blessed Orb</label><label for="blessed" class="chaos">Chaos</label><input class="chaos" type="number" value="1.5" name="blessed"></div>
+					<div class="setting"><label for="divine">Divine Orb</label><label for="divine" class="chaos">Chaos</label><input class="chaos" type="number" value="12" name="divine"></div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<script>
+			updateUI();
+			
+			document.getElementsByClassName("orb-blessed")[0].onclick = function () {
+				blessed++;
+				mod[0][0] = roll(mod[0][1], mod[0][2]);
+				document.getElementById("clickMe").style.display = "none";
+				updateUI();
+			};
+			
+			document.getElementsByClassName("orb-divine")[0].onclick = function () {
+				divine++;
+				for (var i = 1; i < mod.length; i++) {
+					mod[i][0] = roll(mod[i][1], mod[i][2]);
+				}
+				document.getElementById("clickMe").style.display = "none";
+				updateUI();
+			};
+			
+					
+			document.getElementById("clickMe").style.top = document.getElementsByClassName("tBlessed")[0].getBoundingClientRect().top + 20;
+			document.getElementById("clickMe").style.left = document.getElementsByClassName("tBlessed")[0].getBoundingClientRect().left - 195;
+		</script>
+	</body>
+</html>
